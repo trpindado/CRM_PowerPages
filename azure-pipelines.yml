@@ -1,0 +1,39 @@
+trigger:
+  - master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+    displayName: 'Install Node.js'
+
+  - script: npm install
+    displayName: 'Install dependencies'
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      replaceExistingArchive: true
+    displayName: 'Archive files'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
+    displayName: 'Publish artifact'
+
+  - task: AzureWebApp@1
+    inputs:
+      azureSubscription: 'Azure subscription 1'
+      appType: 'webAppLinux'
+      appName: 'crm-powerpages'
+      package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+      runtimeStack: 'NODE|20-lts'
+    displayName: 'Deploy to Azure App Service'
