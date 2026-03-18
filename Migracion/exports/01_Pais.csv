@@ -1,0 +1,51 @@
+﻿CodigoPaisNormalizado,Nombre,Region,ReferenciaIndice,LinkFichaPais,PersonaReferenciaOportun,Comentarios
+USA,United States,America,NBP,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-estados-unidos,Miguel Herrera,Mercado vendedor de GNL
+GBR,United Kingdom,Europa,NBP,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-reino-unido,José Martínez,Mercado vendedor de GNL
+QAT,Qatar,Middle East,AECO,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-catar,José Martínez,Mercado comprador de GNL
+AUS,Australia,Australia,TTF,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-australia,Ana García,Mercado vendedor de GNL
+NOR,Norway,Europa,Henry Hub,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-noruega,José Martínez,Mercado vendedor de GNL
+RUS,Russia,Europa,NBP,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-rusia,Javier Ruiz,Mercado vendedor de GNL
+NGA,Nigeria,Africa,JKLNG,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-nigeria,Pedro Romero,Mercado comprador de GNL
+TTO,Trinidad and Tobago,America,DES Japan,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-trinidad-y-tobago,María Fernández,Mercado vendedor de GNL
+PER,Peru,America,NBP,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-peru,Ana García,Mercado vendedor de GNL
+IDN,Indonesia,Asia,TTF,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-indonesia,Pedro Romero,Mercado comprador de GNL
+EGY,Egypt,Africa,Henry Hub,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-egipto,Elena Torres,Mercado comprador de GNL
+OMN,Oman,Middle East,AECO,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-oman,Isabel Morales,Mercado comprador de GNL
+PNG,Papua New Guinea,Oceanía,Brent-linked,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-papua-nueva-guinea,Miguel Herrera,Mercado vendedor de GNL
+MYS,Malaysia,Asia,JKM,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-malasia,José Martínez,Mercado comprador de GNL
+ARE,UAE,Middle East,Platts LNG,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-emiratos-arabes-unidos,José Martínez,Mercado comprador de GNL
+KWT,Kuwait,Middle East,DES Japan,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-kuwait,Miguel Herrera,Mercado vendedor de GNL
+CHN,China,Asia,Oil-indexed,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-china,Laura Sánchez,Mercado comprador de GNL
+JPN,Japan,Asia,TTF,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-japon,María Fernández,Mercado comprador de GNL
+KOR,South Korea,Asia,Platts LNG,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-corea-del-sur,Elena Torres,Mercado comprador de GNL
+TWN,Taiwan,Asia,NBP,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-taiwan,Pedro Romero,Mercado comprador de GNL
+ITA,Italy,Europa,Oil-indexed,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-italia,Carlos López,Mercado vendedor de GNL
+ESP,Spain,Europa,TTF,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-espana,Elena Torres,Mercado comprador de GNL
+BEL,Belgium,Europa,NBP,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-belgica,Miguel Herrera,Mercado vendedor de GNL
+FRA,France,Europa,DES Japan,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-francia,Pedro Romero,Mercado vendedor de GNL
+DEU,Germany,Europa,Oil-indexed,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-alemania,Ana García,Mercado comprador de GNL
+PRT,Portugal,Europa,Platts LNG,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-portugal,Isabel Morales,Mercado vendedor de GNL
+GRC,Greece,Europa,Platts LNG,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-grecia,Elena Torres,Mercado vendedor de GNL
+TUR,Turkey,Middle East,JKLNG,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-turquia,Ana García,Mercado comprador de GNL
+IND,India,Asia,NBP,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-india,Elena Torres,Mercado comprador de GNL
+PAK,Pakistan,Asia,TTF,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-pakistan,Pedro Romero,Mercado comprador de GNL
+BGD,Bangladesh,Asia,DES Japan,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-bangladesh,Elena Torres,Mercado comprador de GNL
+CHL,Chile,America,JKM,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-chile,Isabel Morales,Mercado comprador de GNL
+ARG,Argentina,America,TTF,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-argentina,Elena Torres,Mercado comprador de GNL
+BRA,Brazil,America,NBP,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-brasil,Miguel Herrera,Mercado comprador de GNL
+MEX,Mexico,America,Brent-linked,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-mexico,Javier Ruiz,Mercado comprador de GNL
+COL,Colombia,America,Henry Hub,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-colombia,Laura Sánchez,Mercado comprador de GNL
+SGP,Singapore,Asia,NBP,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-singapur,Ana García,Mercado vendedor de GNL
+THA,Thailand,Asia,JKM,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-tailandia,Laura Sánchez,Mercado comprador de GNL
+VNM,Vietnam,Asia,Brent-linked,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-vietnam,Javier Ruiz,Mercado comprador de GNL
+PHL,Philippines,Asia,JKLNG,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-filipinas,Ana García,Mercado comprador de GNL
+DNK,Denmark,Europa,Oil-indexed,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-dinamarca,Carlos López,Mercado comprador de GNL
+NLD,Netherlands,Europa,JKM,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-paises-bajos,Javier Ruiz,Mercado comprador de GNL
+POL,Poland,Europa,DES Japan,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-polonia,Elena Torres,Mercado vendedor de GNL
+FIN,Finland,Europa,Brent-linked,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-finlandia,Isabel Morales,Mercado comprador de GNL
+SWE,Sweden,Europa,JKLNG,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-suecia,María Fernández,Mercado comprador de GNL
+MRT,Mauritania,Africa,Oil-indexed,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-mauritania,Carlos López,Mercado comprador de GNL
+MOZ,Mozambique,Africa,Henry Hub,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-mozambique,Elena Torres,Mercado comprador de GNL
+TZA,Tanzania,Africa,AECO,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-tanzania,Miguel Herrera,Mercado comprador de GNL
+ANG,Angola,Africa,Henry Hub,https://www.cesce.es/es/w/riesgo-pais/riesgo-pais-angola,Ana García,Mercado comprador de GNL
+LNG,LNG-Territory,Asia,Brent-linked,https://www.giignl.org/resources/,Elena Torres,Mercado vendedor de GNL

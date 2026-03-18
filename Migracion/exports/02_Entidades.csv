@@ -1,0 +1,51 @@
+﻿CodigoEntidad,Compania,Region,Tipo,CodigoPaisNormalizado,FiscalCode,LEI,Ticker,DunsNumber,Direccion,Comentarios
+ENT0001,Qatar Energy LNG,America,Matriz,USA,FC80958004,AQ6LEK57CLVNXR3H4PLX,QATA8,99-746-6912,"Jl. Gatot Subroto, Jakarta",Entidad activa sector GNL
+ENT0002,Shell LNG Ltd,Europa,Principal,GBR,FC43268018,5ZYWU2OPCCXDVJ8CB573,SHEL1,85-404-3976,"One Shell Plaza, Houston",Entidad activa sector GNL
+ENT0003,TotalEnergies LNG,Middle East,Matriz,QAT,FC33237819,IM0NJQ4KKRZ2IJ6CI5DA,TOTA4,44-990-7069,"1 Canada Square, London",Entidad activa sector GNL
+ENT0004,BP Gas & Power,Australia,Principal,AUS,FC54058722,9PORB2KYEMOLRVS6AIR5,BP3,75-651-6812,"1 St James's Square, London",Entidad activa sector GNL
+ENT0005,Chevron LNG Corp,Europa,Principal,NOR,FC49473411,5MAYN8P7B3JE1QZHST2T,CHEV2,42-373-2800,"Avenida Libertador 1001, Caracas",Entidad activa sector GNL
+ENT0006,ExxonMobil Gas,Europa,Principal,RUS,FC80208723,0LAP2LX93K0K4QU4KTF2,EXXO9,69-891-6991,"2 Place Jean Millier, Paris",Entidad activa sector GNL
+ENT0007,Woodside Energy,Africa,Principal,NGA,FC77075956,LEW0MQEPXBN80CH183O9,WOOD3,75-394-6840,"Jl. Gatot Subroto, Jakarta",Entidad activa sector GNL
+ENT0008,Santos LNG,America,Matriz,TTO,FC23284031,65LV8AQHH9ZTRSJI7S5R,SANT6,22-268-7861,"1 Canada Square, London",Entidad prospecto sector GNL
+ENT0009,Equinor LNG,America,Matriz,PER,FC55401869,2RS0MNLBO3R1ADXNQZLC,EQUI5,51-406-3179,"Al Mirqab, Doha",Entidad prospecto sector GNL
+ENT0010,Eni Gas Solutions,Asia,Matriz,IDN,FC20345360,CL9SYU5T7OE34UHMJY5H,ENI4,25-532-9238,"Jl. Gatot Subroto, Jakarta",Entidad prospecto sector GNL
+ENT0011,Repsol Gas Trading,Africa,Matriz,EGY,FC14686508,LU5WXSR16M80NYKLZN83,REPS8,45-807-6603,"Al Mirqab, Doha",Entidad activa sector GNL
+ENT0012,Naturgy LNG,Middle East,Secundaria,OMN,FC69447573,ASDSJCTIMEQOOTJ53K9X,NATU8,94-793-8081,"Avenida Libertador 1001, Caracas",Entidad activa sector GNL
+ENT0013,Enagás Trading,Oceanía,Matriz,PNG,FC84522843,SP754KBR68ANBB3FWGJ3,ENAG1,97-426-1692,"2 Place Jean Millier, Paris",Entidad activa sector GNL
+ENT0014,Galp LNG,Asia,Secundaria,MYS,FC58377691,9IQUHMI4U8W3BGDOT4WK,GALP8,40-663-8587,"Statoil-veien 1, Stavanger",Entidad activa sector GNL
+ENT0015,RasGas Company,Middle East,Matriz,ARE,FC62943011,XXR7MEFAUL2J0EKNVTGW,RASG3,42-429-3873,"2 Place Jean Millier, Paris",Entidad activa sector GNL
+ENT0016,ADNOC LNG,Middle East,Matriz,KWT,FC19209626,N973IC3P7HKNXD984JFH,ADNO9,86-596-1433,"Statoil-veien 1, Stavanger",Entidad activa sector GNL
+ENT0017,Pertamina Gas,Asia,Secundaria,CHN,FC17063703,HPYZ70RJPO7Q3BWAIA40,PERT7,43-316-4505,"One Shell Plaza, Houston",Entidad activa sector GNL
+ENT0018,PETRONAS LNG,Asia,Matriz,JPN,FC51513987,F1C2SOS87OKPXPGSFY02,PETR3,29-395-8563,"Corniche Rd, Abu Dhabi",Entidad prospecto sector GNL
+ENT0019,CNOOC Gas,Asia,Principal,KOR,FC86388323,0XDJ6P1HM0VUWKVVQLDJ,CNOO8,47-689-3569,"Avenida Libertador 1001, Caracas",Entidad activa sector GNL
+ENT0020,Sinopec LNG,Asia,Principal,TWN,FC25777716,UBI8B4SYESXZBPYHWKEO,SINO2,85-583-9170,"1 Canada Square, London",Entidad prospecto sector GNL
+ENT0021,JERA Co.,Europa,Principal,ITA,FC46332456,WVQQX2SYEL3SDXVNFL1I,JERA3,60-351-5355,"Corniche Rd, Abu Dhabi",Entidad activa sector GNL
+ENT0022,Tokyo Gas Trading,Europa,Matriz,ESP,FC26409218,BZ9ASH5QN5M9LE2PFGSY,TOKY3,89-406-8894,"Al Mirqab, Doha",Entidad activa sector GNL
+ENT0023,Kogas International,Europa,Secundaria,BEL,FC29404872,9GP7CK4CKCFVSGVMM1DO,KOGA3,91-905-4348,"Jl. Gatot Subroto, Jakarta",Entidad activa sector GNL
+ENT0024,CPC Corp Taiwan,Europa,Secundaria,FRA,FC46240124,GWWM7X3LZ6J2WDCWZP2O,CPC1,37-652-3803,"2 Place Jean Millier, Paris",Entidad activa sector GNL
+ENT0025,Gail India LNG,Europa,Principal,DEU,FC68346575,KRJU0584BFLUYMLEJMJ5,GAIL2,93-130-4309,"One Shell Plaza, Houston",Entidad prospecto sector GNL
+ENT0026,Indian Oil LNG,Europa,Principal,PRT,FC19530508,WYE7TVRROEKEIT9UC9IP,INDI2,97-955-6020,"2 Place Jean Millier, Paris",Entidad activa sector GNL
+ENT0027,NTPC Gas,Europa,Principal,GRC,FC10745726,TLSZJ9JQ41FGHVE98DAG,NTPC7,96-581-1064,"Al Mirqab, Doha",Entidad activa sector GNL
+ENT0028,Uniper SE,Middle East,Matriz,TUR,FC34664783,RHJ78SCYTXC3Y7NQG0BK,UNIP3,14-534-2834,"Plot 1, Abuja",Entidad activa sector GNL
+ENT0029,RWE Gas Supply,Asia,Secundaria,IND,FC66355173,FRFQHQ93S8TCRDFDHJP2,RWE8,17-865-4242,"Avenida Libertador 1001, Caracas",Entidad activa sector GNL
+ENT0030,E.ON LNG,Asia,Matriz,PAK,FC20542105,PZZ8Y99225N8HW2CXYP4,E.ON9,52-525-5485,"Avenida Libertador 1001, Caracas",Entidad prospecto sector GNL
+ENT0031,Fluxys LNG,Asia,Matriz,BGD,FC61981198,TXJXZPBVYBGDY4371FUJ,FLUX5,91-479-8324,"Statoil-veien 1, Stavanger",Entidad activa sector GNL
+ENT0032,Zeebrugge LNG,America,Secundaria,CHL,FC53165245,X7JOC3QSMP2RLPQBA5A8,ZEEB1,20-159-6028,"Al Mirqab, Doha",Entidad activa sector GNL
+ENT0033,Gate Terminal BV,America,Secundaria,ARG,FC60336527,KD50REDR0PM9XJICR0FO,GATE1,48-404-9742,"1 St James's Square, London",Entidad activa sector GNL
+ENT0034,Engie LNG,America,Principal,BRA,FC27318830,BWBBID198UJPTL1VCI1D,ENGI7,65-144-4496,"Avenida Libertador 1001, Caracas",Entidad activa sector GNL
+ENT0035,Elengy Trading,America,Principal,MEX,FC35950389,S0UW757PD2WUJND3AX40,ELEN9,39-130-7340,"Al Mirqab, Doha",Entidad activa sector GNL
+ENT0036,Botas LNG,America,Principal,COL,FC12363720,S3I9KMAQFSUWZKPA5J2H,BOTA2,19-577-3045,"1 Canada Square, London",Entidad prospecto sector GNL
+ENT0037,EGPC Gas,Asia,Matriz,SGP,FC86735386,HKS358DKMW4VQSVKXBR9,EGPC1,21-183-5927,"1 Canada Square, London",Entidad activa sector GNL
+ENT0038,OmanLNG,Asia,Principal,THA,FC80060797,8W62T0SNT3IR6Q6RX4OA,OMAN8,62-187-7577,"2 Place Jean Millier, Paris",Entidad activa sector GNL
+ENT0039,Atlantic LNG,Asia,Principal,VNM,FC13979188,08JDZEMWQ62CUBA3UGVJ,ATLA9,49-866-3897,"Statoil-veien 1, Stavanger",Entidad activa sector GNL
+ENT0040,GNL Quintero,Asia,Principal,PHL,FC14026658,QGGIKVZYJ92TQX17QNZ7,GNL8,71-628-7611,"One Shell Plaza, Houston",Entidad activa sector GNL
+ENT0041,GNL Chile SA,Europa,Matriz,DNK,FC20665893,DQ5WDYC7AM4S8BR99UZY,GNL3,79-454-6564,"Statoil-veien 1, Stavanger",Entidad activa sector GNL
+ENT0042,Excelerate Energy,Europa,Matriz,NLD,FC31141240,AO2PLHVE92W4BHUD5UY6,EXCE8,25-244-6891,"Avenida Libertador 1001, Caracas",Entidad activa sector GNL
+ENT0043,New Fortress Energy,Europa,Matriz,POL,FC63543728,6ULOXNHLUV4TP7D6V31P,NEW4,84-377-5564,"1 St James's Square, London",Entidad activa sector GNL
+ENT0044,Golar LNG,Europa,Secundaria,FIN,FC95883779,1NBCC9OLX7H6R094HNBS,GOLA8,93-587-8961,"1 St James's Square, London",Entidad activa sector GNL
+ENT0045,Höegh LNG,Europa,Principal,SWE,FC24449186,KJMUVPQF1A14TH3OZCNL,HÖEG9,85-837-2156,"Avenida Libertador 1001, Caracas",Entidad activa sector GNL
+ENT0046,BW LNG,Africa,Secundaria,MRT,FC44192837,7U1XUXY0J49YXU0MQ3NG,BW1,31-447-9398,"Statoil-veien 1, Stavanger",Entidad activa sector GNL
+ENT0047,MOL Shipping,Africa,Secundaria,MOZ,FC97429867,H66E2EEZ45ORT58UUUIP,MOL8,37-206-5365,"Plot 1, Abuja",Entidad activa sector GNL
+ENT0048,Mitsui O.S.K. LNG,Africa,Matriz,TZA,FC95242437,U4JIHE1YGSK1WC0CUN62,MITS9,50-983-3322,"Al Mirqab, Doha",Entidad prospecto sector GNL
+ENT0049,Tokyo LNG Tanker,Africa,Principal,ANG,FC83943226,JMT6JW7PBD5X6JHQFUKM,TOKY4,13-163-3066,"1 Canada Square, London",Entidad activa sector GNL
+ENT0050,Nakilat Shipping,Asia,Principal,LNG,FC85686515,8NQ4QP4X1JNRQUD6T5NT,NAKI4,74-383-7279,"Al Mirqab, Doha",Entidad activa sector GNL
