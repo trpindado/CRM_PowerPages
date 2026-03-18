@@ -348,6 +348,133 @@ node server.js
           </div>
 
           <div class="doc-section">
+            <h2>Despliegue en Azure (paso a paso con CLI)</h2>
+            <p>A continuaci&oacute;n se detallan los comandos ejecutados para desplegar la aplicaci&oacute;n en <strong>Azure DevOps + Azure App Service</strong> con autenticaci&oacute;n integrada.</p>
+
+            <div class="doc-tip">
+              <i class="fas fa-robot"></i>
+              <strong>Nota:</strong> Todo el proceso de despliegue en Azure fue realizado con la certera asistencia de <strong>Claude (Anthropic)</strong>, que gui&oacute; paso a paso la configuraci&oacute;n completa de Azure DevOps, App Service y autenticaci&oacute;n, ejecutando cada comando de Azure CLI de forma aut&oacute;noma desde la terminal.
+            </div>
+
+            <h3><i class="fas fa-terminal"></i> Paso 1: Instalar Azure CLI y extensi&oacute;n DevOps</h3>
+            <pre class="doc-code">
+# Instalar Azure CLI (Windows)
+winget install --id Microsoft.AzureCLI
+
+# Login en Azure
+az login
+
+# Instalar extensi&oacute;n de Azure DevOps
+az extension add --name azure-devops --yes</pre>
+
+            <h3><i class="fas fa-code-branch"></i> Paso 2: Configurar Azure DevOps y subir c&oacute;digo</h3>
+            <p>Crear la organizaci&oacute;n y proyecto en <code>dev.azure.com</code>, luego:</p>
+            <pre class="doc-code">
+# Configurar defaults
+az devops configure --defaults \
+  organization=https://dev.azure.com/teresariveropindado \
+  project=CRM_PowerPages
+
+# Inicializar repo local y conectar con Azure DevOps
+git init
+git remote add azure \
+  https://teresariveropindado@dev.azure.com/teresariveropindado/CRM_PowerPages/_git/CRM_PowerPages
+
+# Commit y push
+git add -A
+git commit -m "Initial commit - CRM PowerPages"
+git push azure master --set-upstream</pre>
+
+            <h3><i class="fas fa-cloud-upload-alt"></i> Paso 3: Crear recursos en Azure</h3>
+            <pre class="doc-code">
+# Resource Group
+az group create --name CRM-PowerPages-RG --location westeurope
+
+# App Service Plan (F1 = gratuito)
+az appservice plan create \
+  --name CRM-PowerPages-Plan \
+  --resource-group CRM-PowerPages-RG \
+  --sku F1 --is-linux
+
+# Web App con Node.js 20
+az webapp create \
+  --resource-group CRM-PowerPages-RG \
+  --plan CRM-PowerPages-Plan \
+  --name crm-powerpages \
+  --runtime "NODE:20-lts"</pre>
+
+            <h3><i class="fas fa-key"></i> Paso 4: Variables de entorno</h3>
+            <pre class="doc-code">
+# Configurar OPENAI_API_KEY (nunca subirla al repo)
+az webapp config appsettings set \
+  --resource-group CRM-PowerPages-RG \
+  --name crm-powerpages \
+  --settings OPENAI_API_KEY="tu-clave-aqui"
+
+# Habilitar build durante despliegue
+az webapp config appsettings set \
+  --resource-group CRM-PowerPages-RG \
+  --name crm-powerpages \
+  --settings SCM_DO_BUILD_DURING_DEPLOYMENT=true</pre>
+
+            <h3><i class="fas fa-rocket"></i> Paso 5: Desplegar la aplicaci&oacute;n</h3>
+            <pre class="doc-code">
+az webapp up \
+  --resource-group CRM-PowerPages-RG \
+  --name crm-powerpages \
+  --plan CRM-PowerPages-Plan \
+  --runtime "NODE:20-lts" --sku F1</pre>
+            <p>La app queda accesible en <code>https://crm-powerpages.azurewebsites.net</code></p>
+
+            <h3><i class="fas fa-shield-alt"></i> Paso 6: Autenticaci&oacute;n con Azure AD (EasyAuth)</h3>
+            <pre class="doc-code">
+# Registrar app en Azure AD
+az ad app create \
+  --display-name "CRM PowerPages" \
+  --web-redirect-uris "https://crm-powerpages.azurewebsites.net/.auth/login/aad/callback" \
+  --sign-in-audience "AzureADandPersonalMicrosoftAccount"
+
+# Habilitar ID tokens
+az ad app update --id &lt;APP_ID&gt; --enable-id-token-issuance true
+
+# Crear client secret
+az ad app credential reset --id &lt;APP_ID&gt;
+
+# Configurar EasyAuth en App Service
+az webapp auth update \
+  --resource-group CRM-PowerPages-RG \
+  --name crm-powerpages \
+  --enabled true \
+  --action LoginWithAzureActiveDirectory \
+  --aad-client-id "&lt;APP_ID&gt;" \
+  --aad-client-secret "&lt;CLIENT_SECRET&gt;" \
+  --aad-token-issuer-url "https://login.microsoftonline.com/common/v2.0" \
+  --aad-allowed-token-audiences "https://crm-powerpages.azurewebsites.net"</pre>
+
+            <h3><i class="fas fa-users"></i> Paso 7: Restringir acceso a usuarios espec&iacute;ficos</h3>
+            <pre class="doc-code">
+# Requerir asignaci&oacute;n de usuarios (solo acceden los que a&ntilde;adas)
+az ad sp update --id &lt;APP_ID&gt; --set appRoleAssignmentRequired=true
+
+# Luego, en Azure Portal &rarr; Azure AD &rarr; Aplicaciones empresariales
+# &rarr; CRM PowerPages &rarr; Usuarios y grupos &rarr; A&ntilde;adir usuarios</pre>
+
+            <h3><i class="fas fa-list-alt"></i> Recursos creados</h3>
+            <table class="data-table">
+              <thead><tr><th>Recurso</th><th>Nombre</th><th>Tipo</th></tr></thead>
+              <tbody>
+                <tr><td>Organizaci&oacute;n DevOps</td><td><code>teresariveropindado</code></td><td>Azure DevOps</td></tr>
+                <tr><td>Proyecto</td><td><code>CRM_PowerPages</code></td><td>Azure DevOps</td></tr>
+                <tr><td>Resource Group</td><td><code>CRM-PowerPages-RG</code></td><td>Azure (West Europe)</td></tr>
+                <tr><td>App Service Plan</td><td><code>CRM-PowerPages-Plan</code></td><td>Free (F1) Linux</td></tr>
+                <tr><td>Web App</td><td><code>crm-powerpages</code></td><td>Node.js 20 LTS</td></tr>
+                <tr><td>App Registration</td><td><code>CRM PowerPages</code></td><td>Azure AD</td></tr>
+                <tr><td>URL</td><td><code>https://crm-powerpages.azurewebsites.net</code></td><td>Endpoint</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="doc-section">
             <h2>Seguridad y Mantenimiento</h2>
             <ul>
               <li><strong>Contrase&ntilde;as:</strong> Almacenadas en texto plano &mdash; se recomienda a&ntilde;adir bcrypt antes del despliegue en producci&oacute;n</li>

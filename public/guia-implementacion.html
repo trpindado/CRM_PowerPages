@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía de Implementación en Azure — CRM GNL</title>
+  <style>
+    :root {
+      --blue: #003b6f;
+      --blue-mid: #005fa3;
+      --blue-light: #e8f1f8;
+      --orange: #e8630a;
+      --text: #1a1a2e;
+      --muted: #6b7a8d;
+      --border: #d0dce8;
+      --white: #ffffff;
+      --bg: #f5f8fc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    header {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%);
+      color: var(--white); padding: 2.5rem 3rem; display: flex; align-items: center; gap: 1.5rem;
+    }
+    header .logo { font-size: 2.2rem; font-weight: 900; letter-spacing: -1px; }
+    header .logo span { color: var(--orange); }
+    header h1 { font-size: 1.4rem; font-weight: 300; opacity: .9; }
+    header .badge {
+      margin-left: auto; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+      border-radius: 20px; padding: .3rem 1rem; font-size: .8rem; white-space: nowrap;
+    }
+
+    .wrapper { display: flex; max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; gap: 2rem; }
+
+    nav {
+      width: 260px; flex-shrink: 0; position: sticky; top: 1.5rem; align-self: flex-start;
+      background: var(--white); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    nav h3 { font-size: .75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: .8rem; }
+    nav ul { list-style: none; }
+    nav ul li a {
+      display: block; padding: .4rem .6rem; border-radius: 6px;
+      font-size: .88rem; color: var(--blue); text-decoration: none; transition: background .15s;
+    }
+    nav ul li a:hover { background: var(--blue-light); }
+    nav ul li.sub a { padding-left: 1.4rem; font-size: .83rem; color: var(--muted); }
+
+    main { flex: 1; min-width: 0; }
+    section { background: var(--white); border: 1px solid var(--border); border-radius: 10px;
+      padding: 2rem 2.5rem; margin-bottom: 1.8rem; box-shadow: 0 2px 8px rgba(0,0,0,.04); }
+
+    h2 { font-size: 1.35rem; color: var(--blue); border-bottom: 2px solid var(--orange);
+      padding-bottom: .5rem; margin-bottom: 1.3rem; }
+    h3 { font-size: 1.05rem; color: var(--blue-mid); margin: 1.4rem 0 .6rem; }
+    h4 { font-size: .92rem; color: var(--text); margin: 1rem 0 .4rem; font-weight: 600; }
+    p { margin-bottom: .8rem; }
+    ul, ol { padding-left: 1.4rem; margin-bottom: .8rem; }
+    li { margin-bottom: .3rem; }
+    strong { color: var(--blue); }
+
+    .tip, .warn, .info {
+      border-radius: 8px; padding: .9rem 1.2rem; margin: 1rem 0;
+      display: flex; gap: .7rem; align-items: flex-start; font-size: .9rem;
+    }
+    .tip  { background: #edfaf0; border-left: 4px solid #27ae60; }
+    .warn { background: #fff8e1; border-left: 4px solid #f39c12; }
+    .info { background: var(--blue-light); border-left: 4px solid var(--blue-mid); }
+    .tip .icon  { color: #27ae60; font-size: 1.1rem; }
+    .warn .icon { color: #f39c12; font-size: 1.1rem; }
+    .info .icon { color: var(--blue-mid); font-size: 1.1rem; }
+
+    code { background: #eee; border-radius: 3px; padding: .15rem .4rem; font-size: .85rem; font-family: 'Cascadia Code', 'Fira Code', monospace; }
+    pre { background: #1e1e2e; color: #cdd6f4; border-radius: 8px; padding: 1.2rem 1.5rem;
+      overflow-x: auto; font-size: .85rem; line-height: 1.6; margin: .8rem 0; }
+    pre code { background: none; color: inherit; padding: 0; }
+    .cmd { color: #a6e3a1; }
+    .flag { color: #89b4fa; }
+    .val { color: #f9e2af; }
+    .comment { color: #6c7086; }
+
+    .steps { counter-reset: step; list-style: none; padding: 0; }
+    .steps li { counter-increment: step; display: flex; gap: 1rem; margin-bottom: .9rem; align-items: flex-start; }
+    .steps li::before {
+      content: counter(step); background: var(--orange); color: #fff;
+      font-weight: 700; font-size: .8rem; min-width: 1.6rem; height: 1.6rem;
+      border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; margin-top: .15rem;
+    }
+
+    table { width: 100%; border-collapse: collapse; font-size: .88rem; margin: .8rem 0; }
+    th { background: var(--blue); color: var(--white); padding: .55rem .8rem; text-align: left; }
+    td { padding: .5rem .8rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+    tr:nth-child(even) td { background: var(--blue-light); }
+    td code { background: #eee; border-radius: 3px; padding: .1rem .35rem; font-size: .82rem; }
+
+    .back { display: inline-block; margin: 1.5rem 1.5rem 0; color: var(--blue);
+      text-decoration: none; font-size: .9rem; }
+    .back:hover { text-decoration: underline; }
+
+    .arch-diagram {
+      background: var(--blue-light); border: 1px solid var(--border); border-radius: 10px;
+      padding: 1.5rem; margin: 1rem 0; text-align: center; font-size: .9rem;
+    }
+    .arch-diagram .box {
+      display: inline-block; background: var(--white); border: 2px solid var(--blue);
+      border-radius: 8px; padding: .6rem 1.2rem; margin: .3rem; font-weight: 600; color: var(--blue);
+    }
+    .arch-diagram .arrow { color: var(--orange); font-weight: 900; font-size: 1.2rem; margin: 0 .3rem; }
+
+    @media print {
+      nav, header .badge { display: none; }
+      .wrapper { padding: 0; }
+      section { box-shadow: none; border: none; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">GNL<span>·</span>CRM</div>
+  <h1>Guia de Implementacion en Azure</h1>
+  <div class="badge">Version 1.0 — Marzo 2026</div>
+</header>
+
+<a class="back" href="/">← Volver a la aplicacion</a>
+
+<div class="wrapper">
+
+  <nav>
+    <h3>Contenido</h3>
+    <ul>
+      <li><a href="#requisitos">1. Requisitos previos</a></li>
+      <li><a href="#arquitectura">2. Arquitectura</a></li>
+      <li><a href="#azure-cli">3. Instalar Azure CLI</a></li>
+      <li><a href="#devops">4. Azure DevOps</a></li>
+      <li class="sub"><a href="#devops-org">· Organizacion y proyecto</a></li>
+      <li class="sub"><a href="#devops-repo">· Subir codigo al repo</a></li>
+      <li><a href="#appservice">5. Azure App Service</a></li>
+      <li class="sub"><a href="#appservice-rg">· Resource Group</a></li>
+      <li class="sub"><a href="#appservice-plan">· App Service Plan</a></li>
+      <li class="sub"><a href="#appservice-webapp">· Web App</a></li>
+      <li class="sub"><a href="#appservice-env">· Variables de entorno</a></li>
+      <li><a href="#deploy">6. Despliegue</a></li>
+      <li><a href="#auth">7. Autenticacion</a></li>
+      <li class="sub"><a href="#auth-register">· Registro de App</a></li>
+      <li class="sub"><a href="#auth-config">· Configurar EasyAuth</a></li>
+      <li class="sub"><a href="#auth-restrict">· Restringir usuarios</a></li>
+      <li><a href="#pipeline">8. Pipeline CI/CD</a></li>
+      <li><a href="#resumen">9. Resumen de recursos</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- 1. Requisitos -->
+    <section id="requisitos">
+      <h2>1. Requisitos previos</h2>
+      <ul>
+        <li><strong>Cuenta de Azure</strong> — Puedes crear una cuenta gratuita en <code>portal.azure.com</code> (incluye 200 USD de credito)</li>
+        <li><strong>Cuenta de Azure DevOps</strong> — Gratuita en <code>dev.azure.com</code> (hasta 5 usuarios, repos ilimitados)</li>
+        <li><strong>Azure CLI</strong> — Herramienta de linea de comandos (version 2.50+)</li>
+        <li><strong>Node.js 20 LTS</strong> — Runtime de la aplicacion</li>
+        <li><strong>Git</strong> — Control de versiones</li>
+      </ul>
+    </section>
+
+    <!-- 2. Arquitectura -->
+    <section id="arquitectura">
+      <h2>2. Arquitectura del despliegue</h2>
+      <div class="arch-diagram">
+        <div class="box">Azure DevOps<br><small>Repo Git + Pipeline CI/CD</small></div>
+        <span class="arrow">→</span>
+        <div class="box">Azure App Service<br><small>Node.js 20 LTS (Linux)</small></div>
+        <span class="arrow">→</span>
+        <div class="box">Azure AD<br><small>Autenticacion EasyAuth</small></div>
+      </div>
+      <table>
+        <thead><tr><th>Componente</th><th>Servicio Azure</th><th>SKU / Plan</th></tr></thead>
+        <tbody>
+          <tr><td>Repositorio de codigo</td><td>Azure DevOps Repos</td><td>Gratuito</td></tr>
+          <tr><td>CI/CD</td><td>Azure Pipelines</td><td>Gratuito (1 agente)</td></tr>
+          <tr><td>Hosting de la app</td><td>Azure App Service</td><td>F1 (Free) o B1 (Basic)</td></tr>
+          <tr><td>Autenticacion</td><td>Azure AD + EasyAuth</td><td>Incluido</td></tr>
+          <tr><td>Variables secretas</td><td>App Settings (o Key Vault)</td><td>Incluido</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 3. Azure CLI -->
+    <section id="azure-cli">
+      <h2>3. Instalar y configurar Azure CLI</h2>
+      <h3>Instalacion</h3>
+      <p>Descarga e instala desde <code>https://aka.ms/installazurecliwindows</code> o via winget:</p>
+      <pre><code><span class="cmd">winget install</span> <span class="flag">--id</span> <span class="val">Microsoft.AzureCLI</span></code></pre>
+
+      <h3>Login</h3>
+      <pre><code><span class="cmd">az login</span>
+<span class="comment"># Se abre el navegador para autenticarte con tu cuenta Microsoft</span></code></pre>
+
+      <h3>Instalar extension de Azure DevOps</h3>
+      <pre><code><span class="cmd">az extension add</span> <span class="flag">--name</span> <span class="val">azure-devops</span> <span class="flag">--yes</span></code></pre>
+    </section>
+
+    <!-- 4. Azure DevOps -->
+    <section id="devops">
+      <h2>4. Configurar Azure DevOps</h2>
+
+      <h3 id="devops-org">4.1 Crear organizacion y proyecto</h3>
+      <ol class="steps">
+        <li>Accede a <code>https://dev.azure.com</code> e inicia sesion.</li>
+        <li>Crea una <strong>organizacion</strong> (ej: <code>teresariveropindado</code>).</li>
+        <li>Crea un <strong>proyecto</strong> llamado <code>CRM_PowerPages</code> con visibilidad Private y control de versiones Git.</li>
+      </ol>
+
+      <h3>Configurar defaults en CLI</h3>
+      <pre><code><span class="cmd">az devops configure</span> <span class="flag">--defaults</span> \
+  <span class="val">organization=https://dev.azure.com/teresariveropindado</span> \
+  <span class="val">project=CRM_PowerPages</span></code></pre>
+
+      <h3 id="devops-repo">4.2 Subir codigo al repositorio</h3>
+      <p>Inicializa Git en el directorio del proyecto y conecta con Azure DevOps:</p>
+      <pre><code><span class="comment"># Inicializar repositorio local</span>
+<span class="cmd">git init</span>
+<span class="cmd">git remote add</span> <span class="val">azure</span> \
+  <span class="val">https://teresariveropindado@dev.azure.com/teresariveropindado/CRM_PowerPages/_git/CRM_PowerPages</span>
+
+<span class="comment"># Primer commit y push</span>
+<span class="cmd">git add</span> <span class="flag">-A</span>
+<span class="cmd">git commit</span> <span class="flag">-m</span> <span class="val">"Initial commit - CRM PowerPages"</span>
+<span class="cmd">git push</span> <span class="val">azure master</span> <span class="flag">--set-upstream</span></code></pre>
+
+      <div class="tip">
+        <span class="icon">✔</span>
+        <span>El fichero <code>.gitignore</code> excluye automaticamente <code>node_modules/</code>, <code>.env</code> y <code>crm.db</code> del repositorio.</span>
+      </div>
+    </section>
+
+    <!-- 5. App Service -->
+    <section id="appservice">
+      <h2>5. Crear Azure App Service</h2>
+
+      <h3 id="appservice-rg">5.1 Resource Group</h3>
+      <p>Agrupa todos los recursos de Azure en un mismo grupo logico:</p>
+      <pre><code><span class="cmd">az group create</span> \
+  <span class="flag">--name</span> <span class="val">CRM-PowerPages-RG</span> \
+  <span class="flag">--location</span> <span class="val">westeurope</span></code></pre>
+
+      <h3 id="appservice-plan">5.2 App Service Plan</h3>
+      <p>Crea el plan de hospedaje. El plan <strong>F1</strong> es gratuito:</p>
+      <pre><code><span class="cmd">az appservice plan create</span> \
+  <span class="flag">--name</span> <span class="val">CRM-PowerPages-Plan</span> \
+  <span class="flag">--resource-group</span> <span class="val">CRM-PowerPages-RG</span> \
+  <span class="flag">--sku</span> <span class="val">F1</span> \
+  <span class="flag">--is-linux</span></code></pre>
+
+      <div class="info">
+        <span class="icon">ℹ</span>
+        <span>El plan F1 es gratuito pero tiene limitaciones: 60 min CPU/dia, 1 GB RAM, sin dominio personalizado SSL. Para produccion usa <strong>B1</strong> (Basic) o superior.</span>
+      </div>
+
+      <h3 id="appservice-webapp">5.3 Crear la Web App</h3>
+      <pre><code><span class="cmd">az webapp create</span> \
+  <span class="flag">--resource-group</span> <span class="val">CRM-PowerPages-RG</span> \
+  <span class="flag">--plan</span> <span class="val">CRM-PowerPages-Plan</span> \
+  <span class="flag">--name</span> <span class="val">crm-powerpages</span> \
+  <span class="flag">--runtime</span> <span class="val">"NODE:20-lts"</span></code></pre>
+      <p>Esto crea la app accesible en <code>https://crm-powerpages.azurewebsites.net</code></p>
+
+      <h3 id="appservice-env">5.4 Variables de entorno</h3>
+      <p>Configura las variables sensibles (como la API key de OpenAI) directamente en App Service, <strong>nunca en el codigo</strong>:</p>
+      <pre><code><span class="cmd">az webapp config appsettings set</span> \
+  <span class="flag">--resource-group</span> <span class="val">CRM-PowerPages-RG</span> \
+  <span class="flag">--name</span> <span class="val">crm-powerpages</span> \
+  <span class="flag">--settings</span> <span class="val">OPENAI_API_KEY="tu-clave-aqui"</span>
+
+<span class="comment"># Habilitar npm install durante el despliegue</span>
+<span class="cmd">az webapp config appsettings set</span> \
+  <span class="flag">--resource-group</span> <span class="val">CRM-PowerPages-RG</span> \
+  <span class="flag">--name</span> <span class="val">crm-powerpages</span> \
+  <span class="flag">--settings</span> <span class="val">SCM_DO_BUILD_DURING_DEPLOYMENT=true</span></code></pre>
+
+      <div class="warn">
+        <span class="icon">⚠</span>
+        <span>Nunca subas el fichero <code>.env</code> al repositorio. Las variables secretas se gestionan a traves de <strong>App Settings</strong> en Azure o mediante <strong>Azure Key Vault</strong> para mayor seguridad.</span>
+      </div>
+
+      <p>Alternativamente, puedes configurar las variables desde el portal de Azure DevOps en <strong>Pipelines → Library → Variable Groups</strong> para usarlas en los pipelines de CI/CD.</p>
+    </section>
+
+    <!-- 6. Despliegue -->
+    <section id="deploy">
+      <h2>6. Despliegue de la aplicacion</h2>
+
+      <h3>Opcion A: Despliegue directo con CLI (recomendado para inicio)</h3>
+      <p>El comando <code>az webapp up</code> empaqueta, sube y despliega en un solo paso:</p>
+      <pre><code><span class="cmd">az webapp up</span> \
+  <span class="flag">--resource-group</span> <span class="val">CRM-PowerPages-RG</span> \
+  <span class="flag">--name</span> <span class="val">crm-powerpages</span> \
+  <span class="flag">--plan</span> <span class="val">CRM-PowerPages-Plan</span> \
+  <span class="flag">--runtime</span> <span class="val">"NODE:20-lts"</span> \
+  <span class="flag">--sku</span> <span class="val">F1</span></code></pre>
+
+      <div class="info">
+        <span class="icon">ℹ</span>
+        <span>Este comando crea un zip del directorio, lo sube a Kudu, ejecuta <code>npm install</code> automaticamente y arranca la app con <code>npm start</code>.</span>
+      </div>
+
+      <h3>Opcion B: Despliegue via Pipeline CI/CD</h3>
+      <p>Ver seccion <a href="#pipeline">8. Pipeline CI/CD</a> para despliegue automatico en cada push.</p>
+
+      <h3>Verificar el despliegue</h3>
+      <pre><code><span class="comment"># Ver logs en tiempo real</span>
+<span class="cmd">az webapp log tail</span> \
+  <span class="flag">--resource-group</span> <span class="val">CRM-PowerPages-RG</span> \
+  <span class="flag">--name</span> <span class="val">crm-powerpages</span>
+
+<span class="comment"># Reiniciar la app si es necesario</span>
+<span class="cmd">az webapp restart</span> \
+  <span class="flag">--resource-group</span> <span class="val">CRM-PowerPages-RG</span> \
+  <span class="flag">--name</span> <span class="val">crm-powerpages</span></code></pre>
+    </section>
+
+    <!-- 7. Autenticacion -->
+    <section id="auth">
+      <h2>7. Autenticacion con Azure AD (EasyAuth)</h2>
+      <p>Azure App Service incluye un modulo de autenticacion integrado (<strong>EasyAuth</strong>) que protege la aplicacion sin modificar el codigo. Cualquier usuario no autenticado es redirigido al login de Microsoft.</p>
+
+      <h3 id="auth-register">7.1 Registrar la aplicacion en Azure AD</h3>
+      <pre><code><span class="comment"># Crear el registro de aplicacion</span>
+<span class="cmd">az ad app create</span> \
+  <span class="flag">--display-name</span> <span class="val">"CRM PowerPages"</span> \
+  <span class="flag">--web-redirect-uris</span> <span class="val">"https://crm-powerpages.azurewebsites.net/.auth/login/aad/callback"</span> \
+  <span class="flag">--sign-in-audience</span> <span class="val">"AzureADandPersonalMicrosoftAccount"</span>
+
+<span class="comment"># Habilitar emision de ID tokens</span>
+<span class="cmd">az ad app update</span> \
+  <span class="flag">--id</span> <span class="val">&lt;APP_ID&gt;</span> \
+  <span class="flag">--enable-id-token-issuance</span> <span class="val">true</span>
+
+<span class="comment"># Crear un client secret</span>
+<span class="cmd">az ad app credential reset</span> \
+  <span class="flag">--id</span> <span class="val">&lt;APP_ID&gt;</span></code></pre>
+
+      <div class="warn">
+        <span class="icon">⚠</span>
+        <span>Guarda el <strong>client secret</strong> que devuelve el ultimo comando. No se puede recuperar despues.</span>
+      </div>
+
+      <h3 id="auth-config">7.2 Configurar EasyAuth en App Service</h3>
+      <pre><code><span class="cmd">az webapp auth update</span> \
+  <span class="flag">--resource-group</span> <span class="val">CRM-PowerPages-RG</span> \
+  <span class="flag">--name</span> <span class="val">crm-powerpages</span> \
+  <span class="flag">--enabled</span> <span class="val">true</span> \
+  <span class="flag">--action</span> <span class="val">LoginWithAzureActiveDirectory</span> \
+  <span class="flag">--aad-client-id</span> <span class="val">"&lt;APP_ID&gt;"</span> \
+  <span class="flag">--aad-client-secret</span> <span class="val">"&lt;CLIENT_SECRET&gt;"</span> \
+  <span class="flag">--aad-token-issuer-url</span> <span class="val">"https://login.microsoftonline.com/common/v2.0"</span> \
+  <span class="flag">--aad-allowed-token-audiences</span> <span class="val">"https://crm-powerpages.azurewebsites.net"</span></code></pre>
+
+      <h3 id="auth-restrict">7.3 Restringir acceso a usuarios especificos</h3>
+      <p>Por defecto, cualquier cuenta Microsoft puede autenticarse. Para restringir el acceso a un grupo de usuarios:</p>
+      <ol class="steps">
+        <li>Ve a <strong>Azure Portal → Azure Active Directory → Aplicaciones empresariales</strong>.</li>
+        <li>Busca la aplicacion <strong>CRM PowerPages</strong>.</li>
+        <li>En <strong>Propiedades</strong>, activa <strong>"Asignacion de usuarios requerida"</strong> = Si.</li>
+        <li>En <strong>Usuarios y grupos</strong>, agrega solo los usuarios o grupos que deben tener acceso.</li>
+      </ol>
+      <p>Tambien se puede hacer via CLI:</p>
+      <pre><code><span class="comment"># Requerir asignacion de usuarios</span>
+<span class="cmd">az ad sp update</span> \
+  <span class="flag">--id</span> <span class="val">&lt;APP_ID&gt;</span> \
+  <span class="flag">--set</span> <span class="val">appRoleAssignmentRequired=true</span></code></pre>
+    </section>
+
+    <!-- 8. Pipeline -->
+    <section id="pipeline">
+      <h2>8. Pipeline CI/CD (azure-pipelines.yml)</h2>
+      <p>El fichero <code>azure-pipelines.yml</code> en la raiz del proyecto define el pipeline de integracion y despliegue continuo:</p>
+
+      <pre><code><span class="comment"># azure-pipelines.yml</span>
+<span class="cmd">trigger:</span>
+  - master
+
+<span class="cmd">pool:</span>
+  <span class="flag">vmImage:</span> <span class="val">'ubuntu-latest'</span>
+
+<span class="cmd">steps:</span>
+  - <span class="flag">task:</span> <span class="val">NodeTool@0</span>
+    <span class="flag">inputs:</span>
+      <span class="flag">versionSpec:</span> <span class="val">'20.x'</span>
+
+  - <span class="flag">script:</span> <span class="val">npm install</span>
+
+  - <span class="flag">task:</span> <span class="val">ArchiveFiles@2</span>
+    <span class="flag">inputs:</span>
+      <span class="flag">rootFolderOrFile:</span> <span class="val">'$(System.DefaultWorkingDirectory)'</span>
+      <span class="flag">archiveType:</span> <span class="val">'zip'</span>
+
+  - <span class="flag">task:</span> <span class="val">AzureWebApp@1</span>
+    <span class="flag">inputs:</span>
+      <span class="flag">azureSubscription:</span> <span class="val">'Azure subscription 1'</span>
+      <span class="flag">appName:</span> <span class="val">'crm-powerpages'</span>
+      <span class="flag">runtimeStack:</span> <span class="val">'NODE|20-lts'</span></code></pre>
+
+      <h3>Activar el pipeline</h3>
+      <ol class="steps">
+        <li>En Azure DevOps, ve a <strong>Pipelines</strong> en el menu lateral.</li>
+        <li>Haz clic en <strong>"Create Pipeline"</strong>.</li>
+        <li>Selecciona <strong>"Azure Repos Git"</strong> → <strong>"CRM_PowerPages"</strong>.</li>
+        <li>Detectara el <code>azure-pipelines.yml</code> automaticamente. Haz clic en <strong>"Run"</strong>.</li>
+        <li>La primera vez te pedira autorizar la <strong>Service Connection</strong> con tu suscripcion Azure.</li>
+      </ol>
+
+      <h3>Crear la Service Connection</h3>
+      <ol class="steps">
+        <li>Ve a <strong>Project Settings → Service connections</strong>.</li>
+        <li><strong>New service connection → Azure Resource Manager → Service principal (automatic)</strong>.</li>
+        <li>Selecciona tu suscripcion y resource group <code>CRM-PowerPages-RG</code>.</li>
+        <li>Nombra la conexion exactamente: <code>Azure subscription 1</code>.</li>
+        <li>Marca <strong>"Grant access permission to all pipelines"</strong>.</li>
+      </ol>
+
+      <div class="warn">
+        <span class="icon">⚠</span>
+        <span>Las cuentas nuevas de Azure DevOps requieren solicitar el <strong>free parallelism grant</strong> para usar agentes hospedados. Rellena el formulario en <code>https://aka.ms/azpipelines-parallelism-request</code> (tarda 2-3 dias laborables). Mientras tanto, usa <code>az webapp up</code> para desplegar.</span>
+      </div>
+    </section>
+
+    <!-- 9. Resumen -->
+    <section id="resumen">
+      <h2>9. Resumen de recursos creados</h2>
+      <table>
+        <thead><tr><th>Recurso</th><th>Nombre</th><th>Tipo</th></tr></thead>
+        <tbody>
+          <tr><td>Organizacion DevOps</td><td><code>teresariveropindado</code></td><td>Azure DevOps</td></tr>
+          <tr><td>Proyecto</td><td><code>CRM_PowerPages</code></td><td>Azure DevOps</td></tr>
+          <tr><td>Repositorio</td><td><code>CRM_PowerPages</code></td><td>Azure Repos Git</td></tr>
+          <tr><td>Resource Group</td><td><code>CRM-PowerPages-RG</code></td><td>Azure</td></tr>
+          <tr><td>App Service Plan</td><td><code>CRM-PowerPages-Plan</code></td><td>Free (F1) Linux</td></tr>
+          <tr><td>Web App</td><td><code>crm-powerpages</code></td><td>Node.js 20 LTS</td></tr>
+          <tr><td>App Registration</td><td><code>CRM PowerPages</code></td><td>Azure AD</td></tr>
+          <tr><td>URL de la aplicacion</td><td><code>https://crm-powerpages.azurewebsites.net</code></td><td>Endpoint publico</td></tr>
+        </tbody>
+      </table>
+
+      <div class="tip">
+        <span class="icon">✔</span>
+        <span>Para eliminar todos los recursos de Azure de una vez: <code>az group delete --name CRM-PowerPages-RG --yes</code></span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer style="text-align:center;padding:2rem;color:var(--muted);font-size:.82rem;border-top:1px solid var(--border);margin-top:1rem;">
+  CRM GNL — Naturgy &nbsp;|&nbsp; Documento interno &nbsp;|&nbsp; Version 1.0 — Marzo 2026
+</footer>
+
+</body>
+</html>
