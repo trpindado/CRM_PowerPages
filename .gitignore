@@ -1,8 +1,7 @@
 # Dependencies
 node_modules/
 
-# Database
-crm.db
+# Database WAL files (temporales)
 crm.db-shm
 crm.db-wal
 crm.db.backup
