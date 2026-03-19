@@ -41,6 +41,70 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// ============ ACCESS KEY AUTH ============
+const ACCESS_KEY = process.env.ACCESS_KEY || '';
+
+const LOGIN_HTML = `<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GNL CRM - Acceso</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+  body { font-family: 'Segoe UI', system-ui, sans-serif; margin: 0; background: #F5F5F5; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+  .login-box { background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,.1); padding: 48px 40px; text-align: center; max-width: 380px; width: 90%; }
+  .login-box h1 { color: #0078D4; margin: 0 0 8px; font-size: 1.6rem; }
+  .login-box .sub { color: #605E5C; margin-bottom: 32px; font-size: .9rem; }
+  .login-box input { width: 100%; padding: 12px 16px; border: 2px solid #EDEBE9; border-radius: 8px; font-size: 1rem; outline: none; box-sizing: border-box; }
+  .login-box input:focus { border-color: #0078D4; }
+  .login-box button { margin-top: 16px; width: 100%; padding: 12px; background: #0078D4; color: #fff; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; }
+  .login-box button:hover { background: #106EBE; }
+  .error { color: #D13438; margin-top: 12px; font-size: .85rem; display: none; }
+</style></head>
+<body><div class="login-box">
+  <h1><i class="fas fa-fire-flame-curved"></i> GNL CRM</h1>
+  <p class="sub">Introduce la clave de acceso</p>
+  <form method="POST" action="/login">
+    <input type="password" name="key" placeholder="Clave de acceso" autofocus required>
+    <button type="submit"><i class="fas fa-sign-in-alt"></i> Entrar</button>
+    <p class="error" id="err">ERROR_MSG</p>
+  </form>
+</div></body></html>`;
+
+app.post('/login', (req, res) => {
+  if (req.body.key === ACCESS_KEY) {
+    res.cookie('crm_access', ACCESS_KEY, { httpOnly: true, maxAge: 7 * 24 * 3600 * 1000, sameSite: 'lax' });
+    return res.redirect('/');
+  }
+  res.status(401).send(LOGIN_HTML.replace('display: none', 'display: block').replace('ERROR_MSG', 'Clave incorrecta'));
+});
+
+app.get('/logout', (req, res) => {
+  res.clearCookie('crm_access');
+  res.redirect('/');
+});
+
+// Cookie parser (manual, sin dependencia)
+function parseCookies(header) {
+  const cookies = {};
+  if (!header) return cookies;
+  header.split(';').forEach(c => { const [k, ...v] = c.split('='); if (k) cookies[k.trim()] = v.join('=').trim(); });
+  return cookies;
+}
+
+// Gate: si hay ACCESS_KEY configurada, exigir clave
+if (ACCESS_KEY) {
+  app.use((req, res, next) => {
+    // Permitir POST /login sin cookie
+    if (req.path === '/login') return next();
+    const cookies = parseCookies(req.headers.cookie);
+    if (cookies.crm_access === ACCESS_KEY) return next();
+    // No autenticado → mostrar login
+    res.status(401).send(LOGIN_HTML.replace('ERROR_MSG', ''));
+  });
+  console.log('Acceso protegido con clave compartida');
+}
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // File upload config
